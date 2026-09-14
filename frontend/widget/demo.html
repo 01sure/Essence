@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>华米商城 - 客服组件演示页</title>
+  <link rel="stylesheet" href="./huami-chat.css" />
+  <style>
+    body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; margin: 0; background: #f5f6f8; }
+    .hero { background: linear-gradient(135deg, #1a1a2e, #16213e); color: #fff; padding: 80px 20px; text-align: center; }
+    .hero h1 { font-size: 34px; margin: 0 0 12px; }
+    .hero p { color: #9aa3b2; margin: 0; }
+    .goods { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; max-width: 1000px; margin: 40px auto; padding: 0 20px; }
+    .goods .tip { grid-column: 1 / -1; color: #666; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <h1>华米商城演示页</h1>
+    <p>右下角悬浮按钮即「AI 智能客服组件」的实际效果 —— 商城页面只需引入两行代码即可接入</p>
+  </div>
+  <div class="goods">
+    <div class="tip">试着向客服提问：「GTR 4 多少钱」「推荐一款适合跑步的手表」「查一下订单 HU202608150001」「怎么退货」</div>
+  </div>
+
+  <!-- 组件接入代码（server 指向后端地址；同域部署时可省略） -->
+  <script>window.HUAMI_CHAT_CONFIG = { server: "http://localhost:8000", title: "华米智能客服", subtitle: "AI 客服 · 7×24h 在线" };</script>
+  <script src="./huami-chat.js" defer></script>
+</body>
+</html>

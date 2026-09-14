@@ -1,0 +1,43 @@
+{
+  "orders": [
+    {
+      "order_no": "HU202608150001",
+      "phone": "13800001111",
+      "receiver": "张先生",
+      "items": [{"product_id": 1, "name": "Amazfit 跃我 GTR 4 智能手表 曜石黑", "qty": 1, "price": 1199}],
+      "total": 1199,
+      "status": "shipped",
+      "status_note": "包裹已从杭州仓发出",
+      "logistics_company": "顺丰速运",
+      "logistics_no": "SF1398000112233",
+      "address": "浙江省杭州市西湖区文一西路 998 号"
+    },
+    {
+      "order_no": "HU202608180002",
+      "phone": "13800001111",
+      "receiver": "张先生",
+      "items": [
+        {"product_id": 7, "name": "Amazfit 跃我 Band 7 智能手环 曜石黑", "qty": 1, "price": 269},
+        {"product_id": 12, "name": "Amazfit 跃我 fluoroelastomer 表带（GTR4 通用） 曜石黑", "qty": 1, "price": 99}
+      ],
+      "total": 368,
+      "status": "delivered",
+      "status_note": "已送达菜鸟驿站，待取件",
+      "logistics_company": "顺丰速运",
+      "logistics_no": "SF1398000445566",
+      "address": "浙江省杭州市西湖区文一西路 998 号"
+    },
+    {
+      "order_no": "HU202608200003",
+      "phone": "13900002222",
+      "receiver": "李女士",
+      "items": [{"product_id": 2, "name": "Amazfit 跃我 GTS 4 mini 智能手表 樱花粉", "qty": 1, "price": 799}],
+      "total": 799,
+      "status": "refunding",
+      "status_note": "退货申请已审核通过，等待买家寄回",
+      "logistics_company": "",
+      "logistics_no": "",
+      "address": "上海市浦东新区张江高科技园区博云路 2 号"
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+# ===== 环境变量与密钥 =====
+.env
+.env.*
+!.env.example
+!backend/.env.example
+
+# ===== 数据库 =====
+*.db
+*.sqlite
+*.sqlite3
+
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# ===== Node / 前端 =====
+node_modules/
+dist/
+.vite/
+*.log
+npm-debug.log*
+
+# ===== 系统与编辑器 =====
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# ===== 部署产物 =====
+*.pid
+*.sock
+deploy/nginx/nginx-*.conf

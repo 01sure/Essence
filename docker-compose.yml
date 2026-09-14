@@ -1,0 +1,90 @@
+name: huami-agent
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: huami-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root123}
+      MYSQL_DATABASE: huami_agent
+      MYSQL_USER: huami
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-huami123}
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-root123}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  elasticsearch:
+    build:
+      context: ./deploy/elasticsearch
+    container_name: huami-es
+    restart: always
+    environment:
+      discovery.type: single-node
+      xpack.security.enabled: "false"
+      ES_JAVA_OPTS: ${ES_JAVA_OPTS:--Xms1g -Xmx1g}
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:9200/_cluster/health || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    container_name: huami-redis
+    restart: always
+    command: ["redis-server", "--appendonly", "yes", "--maxmemory", "128mb", "--maxmemory-policy", "allkeys-lru"]
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+    container_name: huami-backend
+    restart: always
+    env_file: ./backend/.env
+    environment:
+      ES_URL: http://elasticsearch:9200
+      DATABASE_URL: mysql+aiomysql://huami:${MYSQL_PASSWORD:-huami123}@mysql:3306/huami_agent?charset=utf8mb4
+      # 多 worker 限流 / SSE 总线可升级使用 Redis（多实例部署推荐）
+      REDIS_URL: redis://redis:6379/0
+    depends_on:
+      mysql:
+        condition: service_healthy
+      elasticsearch:
+        condition: service_started
+      redis:
+        condition: service_healthy
+    expose:
+      - "8000"
+    command: >
+      sh -c "python scripts/init_data.py &&
+             uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 1"
+
+  nginx:
+    build:
+      context: .
+      dockerfile: deploy/nginx/Dockerfile
+    container_name: huami-nginx
+    restart: always
+    ports:
+      - "${HTTP_PORT:-80}:80"
+    depends_on:
+      - backend
+
+volumes:
+  mysql_data:
+  es_data:
+  redis_data:

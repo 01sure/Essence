@@ -1,0 +1,21 @@
+fastapi>=0.115,<1.0
+uvicorn[standard]>=0.30
+pydantic>=2.7
+pydantic-settings>=2.2
+sqlalchemy>=2.0,<2.1
+aiomysql>=0.2.0
+aiosqlite>=0.19
+pymysql>=1.1
+cryptography>=42.0
+openai>=1.30,<2.0
+elasticsearch>=8.13,<9.0
+aiohttp>=3.9
+httpx>=0.27
+PyJWT>=2.8
+python-multipart>=0.0.9
+# Distributed rate limiter & SSE bus multi-instance
+redis>=5.0,<6.0
+
+# Optional: local embedding provider (EMBEDDING_PROVIDER=local)
+# sentence-transformers>=2.7
+# torch>=2.2
